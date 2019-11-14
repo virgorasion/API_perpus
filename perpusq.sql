@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.6.5.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 14 Nov 2019 pada 03.13
--- Versi server: 10.4.6-MariaDB
--- Versi PHP: 7.3.9
+-- Generation Time: Nov 14, 2019 at 10:26 AM
+-- Server version: 10.1.21-MariaDB
+-- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,13 +17,35 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `perpusq`
+-- Database: `u187093969_perpus`
 --
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `buku`
+-- Table structure for table `booking`
+--
+
+CREATE TABLE `booking` (
+  `id` int(11) NOT NULL,
+  `id_user` int(10) NOT NULL,
+  `id_buku` int(11) NOT NULL,
+  `tanggal_booking` date NOT NULL,
+  `tenggat_booking` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `booking`
+--
+
+INSERT INTO `booking` (`id`, `id_user`, `id_buku`, `tanggal_booking`, `tenggat_booking`) VALUES
+(6, 1, 1, '2019-11-14', '2019-11-15'),
+(7, 1, 1, '2019-11-14', '2019-11-15');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `buku`
 --
 
 CREATE TABLE `buku` (
@@ -33,14 +53,23 @@ CREATE TABLE `buku` (
   `judul_buku` varchar(20) NOT NULL,
   `penerbit` varchar(20) NOT NULL,
   `pengarang` varchar(50) NOT NULL,
+  `tahun` int(4) NOT NULL,
   `id_kategori` int(2) NOT NULL,
   `jumlah` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `buku`
+--
+
+INSERT INTO `buku` (`id`, `judul_buku`, `penerbit`, `pengarang`, `tahun`, `id_kategori`, `jumlah`) VALUES
+(1, 'Sistem Recognition', 'PT. Virgorasion', 'M Nur Fauzan W', 2018, 1, 2),
+(2, 'Sistem E-Tilang', 'PT. Virgorasion', 'Nur Hidayatul Mustafit', 2018, 1, 2);
+
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `instansi`
+-- Table structure for table `instansi`
 --
 
 CREATE TABLE `instansi` (
@@ -53,16 +82,16 @@ CREATE TABLE `instansi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `instansi`
+-- Dumping data for table `instansi`
 --
 
 INSERT INTO `instansi` (`id`, `nama_instansi`, `alamat`, `username`, `password`, `token`) VALUES
-(1, 'SMKN 2 Surabaya', 'Jl. Tentara Genie Pelajar', 'admin', '$2y$10$w8oeWl/WLyds5nJ6tIi5ped0YK2vpczQjPKa5ldb0XI6u/45ixQXO', 'safq2t2352');
+(1, 'SMKN 2 Surabaya', 'Jl. Tentara Genie Pelajar', 'admin', '$2y$10$w8oeWl/WLyds5nJ6tIi5ped0YK2vpczQjPKa5ldb0XI6u/45ixQXO', 'c4ca4238a0b923820dcc509a6f75849b');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `kategori`
+-- Table structure for table `kategori`
 --
 
 CREATE TABLE `kategori` (
@@ -73,14 +102,14 @@ CREATE TABLE `kategori` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pinjaman`
+-- Table structure for table `pinjaman`
 --
 
 CREATE TABLE `pinjaman` (
   `id` int(11) NOT NULL,
   `nis_siswa` varchar(10) NOT NULL,
   `id_buku` int(11) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 0,
+  `status` int(11) NOT NULL DEFAULT '0',
   `tanggal_pinjam` date NOT NULL,
   `tanggal_kembali` datetime NOT NULL,
   `created_at` datetime NOT NULL,
@@ -91,7 +120,7 @@ CREATE TABLE `pinjaman` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `status_pinjaman`
+-- Table structure for table `status_pinjaman`
 --
 
 CREATE TABLE `status_pinjaman` (
@@ -100,7 +129,7 @@ CREATE TABLE `status_pinjaman` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `status_pinjaman`
+-- Dumping data for table `status_pinjaman`
 --
 
 INSERT INTO `status_pinjaman` (`id`, `status`) VALUES
@@ -110,7 +139,7 @@ INSERT INTO `status_pinjaman` (`id`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -127,37 +156,45 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id`, `nama`, `nis`, `nisn`, `kelas`, `alamat`, `token`, `created_at`, `updated_at`, `password`) VALUES
-(1, 'Moch Nur Fauzan Widyanto', '13236', '0008096617', '12RPL-1', 'Kapas Madya 3i Nomor 4', 'wasd323twevgtw34e6rnywbhgvft', '2019-11-14 08:42:53', '2019-11-14 08:42:53', '$2y$10$w8oeWl/WLyds5nJ6tIi5ped0YK2vpczQjPKa5ldb0XI6u/45ixQXO');
+(1, 'Moch Nur Fauzan Widyanto', '13236', '0008096617', '12RPL-1', 'Kapas Madya 3i Nomor 4', 'c4ca4238a0b923820dcc509a6f75849b', '2019-11-14 08:42:53', '2019-11-14 08:42:53', '$2y$10$w8oeWl/WLyds5nJ6tIi5ped0YK2vpczQjPKa5ldb0XI6u/45ixQXO');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `buku`
+-- Indexes for table `booking`
+--
+ALTER TABLE `booking`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `nis` (`id_user`),
+  ADD KEY `id_buku` (`id_buku`);
+
+--
+-- Indexes for table `buku`
 --
 ALTER TABLE `buku`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_kategori` (`id_kategori`);
 
 --
--- Indeks untuk tabel `instansi`
+-- Indexes for table `instansi`
 --
 ALTER TABLE `instansi`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `kategori`
+-- Indexes for table `kategori`
 --
 ALTER TABLE `kategori`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `pinjaman`
+-- Indexes for table `pinjaman`
 --
 ALTER TABLE `pinjaman`
   ADD PRIMARY KEY (`id`),
@@ -165,13 +202,13 @@ ALTER TABLE `pinjaman`
   ADD KEY `id_buku` (`id_buku`);
 
 --
--- Indeks untuk tabel `status_pinjaman`
+-- Indexes for table `status_pinjaman`
 --
 ALTER TABLE `status_pinjaman`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
@@ -181,46 +218,44 @@ ALTER TABLE `user`
   ADD KEY `nisn_2` (`nisn`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `buku`
+-- AUTO_INCREMENT for table `booking`
+--
+ALTER TABLE `booking`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `buku`
 --
 ALTER TABLE `buku`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT untuk tabel `instansi`
+-- AUTO_INCREMENT for table `instansi`
 --
 ALTER TABLE `instansi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
--- AUTO_INCREMENT untuk tabel `kategori`
+-- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
-
 --
--- AUTO_INCREMENT untuk tabel `pinjaman`
+-- AUTO_INCREMENT for table `pinjaman`
 --
 ALTER TABLE `pinjaman`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
--- AUTO_INCREMENT untuk tabel `status_pinjaman`
+-- AUTO_INCREMENT for table `status_pinjaman`
 --
 ALTER TABLE `status_pinjaman`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
--- AUTO_INCREMENT untuk tabel `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-COMMIT;
-
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
