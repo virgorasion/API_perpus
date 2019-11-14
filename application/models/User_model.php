@@ -2,10 +2,14 @@
 
 class User_model extends CI_model
 {
-    public function get_profile($token)
+    public function get_profile($user_id,$token)
     {
-        $get_user = $this->db->select("id,nama,nis,nisn,kelas,alamat")->from("user")->get()->result();
-        return $get_user;
+        if ($this->get_token($user_id) == $token) {
+            $get_user = $this->db->select("id,nama,nis,nisn,kelas,alamat")->from("user")->get()->result();
+            return $get_user;
+        }else{
+            return "Token Missmatch";
+        }
     }
 
     public function get_all_buku($data)

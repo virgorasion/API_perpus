@@ -12,7 +12,8 @@ class User_controller extends CI_controller
     public function profile()
     {
         $token = $this->input->get("token");
-        echo json_encode($this->User_model->get_profile($token));
+        $user_id = $this->input->get("user_id");
+        echo json_encode($this->User_model->get_profile($user_id,$token));
     }
 
     public function get_buku()
