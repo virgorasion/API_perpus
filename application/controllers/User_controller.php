@@ -61,4 +61,15 @@ class User_controller extends CI_controller
         $delete_booking = $this->User_model->delete_booking($data);
         echo json_encode($delete_booking);
     }
+
+    public function logout($user_id)
+    {
+        $user_id = $this->input->get("user_id");
+        $this->session->sess_destroy();
+        $update = $this->db->update("user",["token"=>""],["id"=>$user_id]);
+        if ($update) {
+            return True;
+        }
+        return "Ada Kesalahan";
+    }
 }
